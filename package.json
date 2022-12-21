@@ -1,0 +1,28 @@
+{
+  "dependencies": {
+    "@tensorflow-models/face-landmarks-detection": "0.0.1",
+    "@tensorflow/tfjs": "2.6.0",
+    "@tensorflow/tfjs-node": "^4.1.0",
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "type": "module"
+  },
+  "name": "analyze_test_cheating",
+  "description": "conda create -n psio_projekt python=3.6 numpy",
+  "version": "1.0.0",
+  "main": "sample.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cpprian/analyze_test_cheating.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cpprian/analyze_test_cheating/issues"
+  },
+  "homepage": "https://github.com/cpprian/analyze_test_cheating#readme"
+}
