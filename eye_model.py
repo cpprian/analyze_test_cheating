@@ -23,7 +23,7 @@ class EyeModel:
         self.landmarks = landmarks
 
         # calibration 
-        self.nb_frames = 0
+        self.nb_frames = 20
         self.tresholds_left = []
         self.tresholds_right = []
 
@@ -58,9 +58,9 @@ class EyeModel:
                            (self.landmarks.part(self.points[5]).x, self.landmarks.part(self.points[5]).y)], np.int32)
 
         mask = np.full(self.frame.shape[:2], 255, dtype=np.uint8)
-        cv2.fillPoly(mask, [region], 0)
-        e = cv2.bitwise_and(
-                            np.zeros(self.fram.shape[:2], np.uintt8), 
+        cv2.fillPoly(mask, [region], (0, 0, 0))
+        e = cv2.bitwise_not(
+                            np.zeros(self.frame.shape[:2], np.uint8), 
                             self.frame.copy(), 
                             mask=mask)
 
@@ -142,5 +142,4 @@ class EyeModel:
             self.iris_x = int(iris['m10'] / iris['m00'])
             self.iris_y = int(iris['m01'] / iris['m00'])
         except (ZeroDivisionError, IndexError):
-            self.iris_x = 0
-            self.iris_y = 0
+            pass
