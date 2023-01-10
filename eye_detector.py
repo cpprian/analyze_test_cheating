@@ -14,7 +14,6 @@ class EyeDetector:
 
         self.face_detector = dlib.get_frontal_face_detector()
         self.predictor = dlib.shape_predictor(os.path.join(os.path.dirname(__file__), 'shape_68.dat'))
-
     
     def detect(self, frame):
         self.frame = frame

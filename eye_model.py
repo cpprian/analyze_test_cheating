@@ -14,7 +14,6 @@ class EyeModel:
 
         self.origin = None
         self.isolated_eye = None
-        self.ratio_blinks = None
         self.points = None
         self.treshold = None
 
@@ -22,32 +21,12 @@ class EyeModel:
         self.side = side
         self.landmarks = landmarks
 
-        # calibration 
         self.nb_frames = 20
         self.tresholds_left = []
         self.tresholds_right = []
 
         self.eval_eye()
         self.detect_iris()
-
-    def get_ratio_blinks(self):
-        left = (self.landmarks.part(self.points[0]).x, self.landmarks.part(self.points[0]).y)
-        right = (self.landmarks.part(self.points[3]).x, self.landmarks.part(self.points[3]).y)
-
-        center_top = (int((self.landmarks.part(self.points[1]).x + self.landmarks.part(self.points[2]).x) / 2),
-                      int((self.landmarks.part(self.points[1]).y + self.landmarks.part(self.points[2]).y) / 2))
-        center_bottom = (int((self.landmarks.part(self.points[5]).x + self.landmarks.part(self.points[4]).x) / 2),
-                            int((self.landmarks.part(self.points[5]).y + self.landmarks.part(self.points[4]).y) / 2))
-
-        width = int(math.hypot(left[0] - right[0], left[1] - right[1]))
-        height = int(math.hypot(center_top[0] - center_bottom[0], center_top[1] - center_bottom[1]))
-
-        try:
-            ratio = width / height
-        except ZeroDivisionError:
-            ratio = 0
-        
-        return ratio
 
     def get_isolated_eye(self):
         region = np.array([(self.landmarks.part(self.points[0]).x, self.landmarks.part(self.points[0]).y),
@@ -83,7 +62,6 @@ class EyeModel:
         elif self.side:
             self.points = self.RIGHT_POINTS
 
-        self.blinks = self.get_ratio_blinks()
         self.isolated_eye = self.get_isolated_eye()
 
         if not (
