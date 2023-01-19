@@ -5,15 +5,14 @@ import math
 class EyeModel:
 
     AVG_IRIS_SIZE = 0.48
-    LEFT_POINTS = [36, 37, 38, 39, 40, 41]
-    RIGHT_POINTS = [42, 43, 44, 45, 46, 47]
+    LANDMARKS_LEFT_POINTS = [36, 37, 38, 39, 40, 41]
+    LANDMARKS_RIGHT_POINTS = [42, 43, 44, 45, 46, 47]
 
     def __init__(self, frame, landmarks, side):
         self.iris_x = None
         self.iris_y = None
 
         self.origin = None
-        self.isolated_eye = None
         self.points = None
         self.treshold = None
 
@@ -28,7 +27,7 @@ class EyeModel:
         self.eval_eye()
         self.detect_iris()
 
-    def get_isolated_eye(self):
+    def compute_isolated_eye(self):
         region = np.array([(self.landmarks.part(self.points[0]).x, self.landmarks.part(self.points[0]).y),
                            (self.landmarks.part(self.points[1]).x, self.landmarks.part(self.points[1]).y),
                            (self.landmarks.part(self.points[2]).x, self.landmarks.part(self.points[2]).y),
@@ -53,16 +52,13 @@ class EyeModel:
         self.frame = e[min_y: max_y, min_x: max_x]
         self.origin = (min_x, min_y)
 
-        h, w = self.frame.shape[:2]
-        return (w/2, h/2)
-
     def eval_eye(self):
         if not self.side:
-            self.points = self.LEFT_POINTS
+            self.points = self.LANDMARKS_LEFT_POINTS
         elif self.side:
-            self.points = self.RIGHT_POINTS
+            self.points = self.LANDMARKS_RIGHT_POINTS
 
-        self.isolated_eye = self.get_isolated_eye()
+        self.compute_isolated_eye()
 
         if not (
             len(self.tresholds_left) >= self.nb_frames and

@@ -39,7 +39,6 @@ def main():
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
 
-
         if len(mouse_detector.mouse_coordinates) != len_mouse_detector:
             len_mouse_detector = len_mouse_detector + 1
             eye_coordinates_from_corners.append((eye_detector.get_left_coordinates(), eye_detector.get_right_coordinates()))
@@ -54,9 +53,8 @@ def main():
                     hours, rem = divmod(end_time - start_time, 3600)
                     minutes, seconds = divmod(rem, 60)
 
-                    test_cheat.append("{:0>2}:{:0>2}:{:05.2f}".format(int(hours),int(minutes),seconds))
+                    test_cheat.append("{} duration: {}:{}:{}".format(time.strftime("%Y-%m-%d %H:%M:%S", start_time), hours, minutes, seconds))
                     detected_test_cheating = list()
-                    print("Cheating detected")
             else:
                 detected_test_cheating = list()
 
